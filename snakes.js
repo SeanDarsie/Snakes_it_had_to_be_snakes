@@ -2,15 +2,17 @@ var KEYLEFT = 37;
 var KEYDOWN = 38;
 var KEYRIGHT = 39;
 var KEYUP = 40;
+var speed = 15;
 
 var player = class player {
-    constructor(posx, posy, tail, alive, dirx, diry) {
+    constructor(posx, posy, tail, alive, dirx, diry, score) {
         this.tail = tail;
         this.alive = alive;
         this.dirx = dirx;
         this.diry = diry;
         this.posx = posx;
         this.posy = posy;
+        this.score = score;
     }
 }
 
@@ -21,18 +23,19 @@ class food {
     }
 }
 
-var player = new player(10,10,4,true,1,0);
+var player = new player(10,10,4,true,1,0, 0);
 var gridSize = 10;
-var tileCount =100;
+var tileCount =50;
 var foods = [];
 var foodSpawn = 0;
 var trail = [];
 
 window.onload=function() {
+    trailLength = document.getElementById("snakeLength");
     canvas = document.getElementById("snakeCanvas");
     context=canvas.getContext("2d");
     document.addEventListener("keydown",keyPush);
-    setInterval(game,1000/15);
+    setInterval(game,1000/speed);
 }
 
 function game() {
@@ -55,7 +58,7 @@ function game() {
     context.fillRect(0,0,canvas.width, canvas.height);
     foodSpawn += 1;
     // console.log(foodSpawn);
-    if (foodSpawn >= 30) {
+    if (foodSpawn >= 10) {
         foods.push({x: Math.floor(Math.random() * tileCount), y: Math.floor(Math.random() * tileCount)});
         foodSpawn = 0;
     }
@@ -63,8 +66,9 @@ function game() {
     context.fillStyle="lime";
     for (var i = 0; i < trail.length; i++) {
         context.fillRect(trail[i].x*gridSize, trail[i].y*gridSize, gridSize - 2, gridSize - 2);
-        if (trail[i].x== player.posx && trail[i].y == player.posy) {
+        if (trail[i].x == player.posx && trail[i].y == player.posy) {
             player.tail = 4;
+            player.score = 0;
         }
     }
     trail.push({x: player.posx, y: player.posy});
@@ -79,8 +83,17 @@ function game() {
         if (foods[i].x == player.posx && foods[i].y == player.posy) {
             player.tail += 1;
             foods.splice(i,1);
+            player.score += 5;
+            if (player.score % 50 == 0) {
+                speed += 1;
+                setInterval(game,1000/speed);
+                
+            }
         }
     }
+    trailLength.value = "Player Length: " + player.tail + 
+    "\nPlayer Score: " + player.score +
+    "\nSpeed: " + speed;
     // console.log("game running");
 
 }
@@ -101,7 +114,7 @@ function keyPush(e) {
             player.diry =- 1;
             break;
         case KEYRIGHT:
-            if (player.dirx == -11) {
+            if (player.dirx == -1) {
                 break;
             }
             player.dirx = 1;
