@@ -2,7 +2,7 @@ var KEYLEFT = 37;
 var KEYDOWN = 38;
 var KEYRIGHT = 39;
 var KEYUP = 40;
-var speed = 15;
+var speed = 100;
 
 var player = class player {
     constructor(posx, posy, tail, alive, dirx, diry, score) {
@@ -36,7 +36,7 @@ window.onload=function() {
     canvas = document.getElementById("snakeCanvas");
     context=canvas.getContext("2d");
     document.addEventListener("keydown",keyPush);
-    setInterval(game,1000/speed);
+    setInterval(game,speed);
 }
 
 function game() {
@@ -70,6 +70,8 @@ function game() {
         if (trail[i].x == player.posx && trail[i].y == player.posy) {
             player.tail = 4;
             player.score = 0;
+            // speed = 1000 / 15;
+
         }
     }
     trail.push({x: player.posx, y: player.posy});
@@ -86,8 +88,8 @@ function game() {
             foods.splice(i,1);
             player.score += 5;
             if (player.score % 50 == 0) {
-                speed += 1;
-                setInterval(game,1000/speed);
+                speed -= 1;
+                setInterval(game,speed);
                 if (player.score % 100 == 0) {
                     foodColor = "blue";
                 } else {
