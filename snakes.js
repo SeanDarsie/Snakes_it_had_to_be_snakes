@@ -2,7 +2,7 @@ var KEYLEFT = 37;
 var KEYDOWN = 38;
 var KEYRIGHT = 39;
 var KEYUP = 40;
-var speed = 50;
+var SPACE = 32;
 
 var player = class player {
     constructor(posx, posy, tail, alive, dirx, diry, score) {
@@ -31,15 +31,18 @@ var foodSpawn = 0;
 var trail = [];
 var foodColor = "red"
 var snakeColor = "lime";
+var speed = 50;
 
 window.onload=function() {
     trailLength = document.getElementById("snakeLength");
+    speedUp = document.getElementById("speedUp");
     canvas = document.getElementById("snakeCanvas");
     context=canvas.getContext("2d");
     document.addEventListener("keydown",keyPush);
     setInterval(game,speed);
 }
 
+speedUp.value = "Press [SPACE] for a CHALLENGE"
 function game() {
     player.posx += player.dirx;
     player.posy += player.diry;
@@ -125,7 +128,12 @@ function getSnakeColor() {
   }
 
 function keyPush(e) {
+    console.log(e.keyCode);
     switch(e.keyCode) {
+        case SPACE:
+            speed = 40;
+            setInterval(game, speed);
+            break;
         case KEYLEFT:
             if (player.dirx == 1) {
                 break;
