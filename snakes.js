@@ -2,7 +2,7 @@ var KEYLEFT = 37;
 var KEYDOWN = 38;
 var KEYRIGHT = 39;
 var KEYUP = 40;
-var speed = 100;
+var speed = 50;
 
 var player = class player {
     constructor(posx, posy, tail, alive, dirx, diry, score) {
@@ -30,6 +30,7 @@ var foods = [];
 var foodSpawn = 0;
 var trail = [];
 var foodColor = "red"
+var snakeColor = "lime";
 
 window.onload=function() {
     trailLength = document.getElementById("snakeLength");
@@ -64,7 +65,7 @@ function game() {
         foodSpawn = 0;
     }
     
-    context.fillStyle="lime";
+    context.fillStyle = snakeColor;
     for (var i = 0; i < trail.length; i++) {
         context.fillRect(trail[i].x*gridSize, trail[i].y*gridSize, gridSize - 2, gridSize - 2);
         if (trail[i].x == player.posx && trail[i].y == player.posy) {
@@ -88,13 +89,15 @@ function game() {
             foods.splice(i,1);
             player.score += 5;
             if (player.score % 50 == 0) {
-                speed -= 1;
-                setInterval(game,speed);
-                if (player.score % 100 == 0) {
-                    foodColor = "blue";
-                } else {
-                    foodColor = "cyan";
-                }
+                // speed -= 1;
+                // setInterval(game,speed);
+                // if (player.score % 100 == 0) {
+                //     foodColor = "blue";
+                // } else {
+                //     foodColor = "cyan";
+                // }
+                foodColor = getRandomColor();
+                snakeColor = getSnakeColor();
             }
         }
     }
@@ -104,6 +107,23 @@ function game() {
     // console.log("game running");
 
 }
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+function getSnakeColor() {
+    var letters = 'ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 6)];
+    }
+    return color;
+  }
+
 function keyPush(e) {
     switch(e.keyCode) {
         case KEYLEFT:
