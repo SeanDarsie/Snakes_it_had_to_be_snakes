@@ -29,6 +29,7 @@ var tileCount =50;
 var foods = [];
 var foodSpawn = 0;
 var trail = [];
+var foodColor = "red"
 
 window.onload=function() {
     trailLength = document.getElementById("snakeLength");
@@ -58,7 +59,7 @@ function game() {
     context.fillRect(0,0,canvas.width, canvas.height);
     foodSpawn += 1;
     // console.log(foodSpawn);
-    if (foodSpawn >= 10) {
+    if (foodSpawn >= 20) {
         foods.push({x: Math.floor(Math.random() * tileCount), y: Math.floor(Math.random() * tileCount)});
         foodSpawn = 0;
     }
@@ -76,7 +77,7 @@ function game() {
         trail.shift();
     }
 
-    context.fillStyle="red";
+    context.fillStyle=foodColor;
     for (var i = 0; i < foods.length; i++) {
         context.fillRect(foods[i].x*gridSize,foods[i].y*gridSize,gridSize-2,gridSize-2);
         // console.log(foods[i]);
@@ -87,7 +88,11 @@ function game() {
             if (player.score % 50 == 0) {
                 speed += 1;
                 setInterval(game,1000/speed);
-                
+                if (player.score % 100 == 0) {
+                    foodColor = "blue";
+                } else {
+                    foodColor = "cyan";
+                }
             }
         }
     }
