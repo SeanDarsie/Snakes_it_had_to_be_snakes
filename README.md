@@ -5,7 +5,7 @@
 ## To Use
 
 ```bash
-# Clone this repository
+# In the command line of your terminal clone this repository
 git clone https://github.com/SeanDarsie/Snakes_it_had_to_be_snakes.git
 # Go into the repository
 cd Snakes_it_had_to_be_snakes
