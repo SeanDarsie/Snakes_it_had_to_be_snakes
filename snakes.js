@@ -42,7 +42,7 @@ window.onload=function() {
     setInterval(game,speed);
 }
 
-speedUp.value = "Press [SPACE] for a CHALLENGE"
+speedUp.value = "Press [SPACE] for a CHALLENGE! [CMD R] to reset";
 function game() {
     player.posx += player.dirx;
     player.posy += player.diry;
@@ -105,8 +105,7 @@ function game() {
         }
     }
     trailLength.value = "Player Length: " + player.tail + 
-    "\nPlayer Score: " + player.score +
-    "\nSpeed: " + speed;
+    "\nPlayer Score: " + player.score;
     // console.log("game running");
 
 }
